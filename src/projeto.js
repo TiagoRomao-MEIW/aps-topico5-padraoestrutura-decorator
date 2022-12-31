@@ -93,37 +93,50 @@ function rP(){ // função para exibir nº aluno (simula obtenção dos parametr
 
     document.getElementById("numAluno").textContent='Atividade aluno n.º ' + StdID;
 }
-var receberParams = function(){ // carrega parametros ficticios
+var receberParams = function(){ // carrega parametros ficticios; COMPONENTE no Padrão de Estrutura Decorator
     this.ActID = 12345
     this.StdID = 75309 
 }
 
-var configActivity = function(){      // configura a atividade
+var configActivity = function(){ // configura a atividade; COMPONENTE no Padrão de Estrutura Decorator
     this.discord = document.getElementById("ChDiscord").value;
     this.slack = document.getElementById("ChSlack").value;   
 }
 
-var getActivity = function(){      // obtem a atividade realizada pelo aluno
+var getActivity = function(){   // obtem a atividade realizada pelo aluno; COMPONENTE no Padrão de Estrutura Decorator
 
     this.IdStdDiscord = document.getElementById("IdDiscord").value;
     this.IdStdSlack = document.getElementById("IdSlack").value;  
 }
 
-var getAnalyticsStd = function(){ // simula analiticas da atividade
+var getAnalyticsStd = function(){ // simula analiticas da atividade; COMPONENTE no Padrão de Estrutura Decorator
 
     this.quantA = ['tem msg Discord?','tem msg Slack?', 'nº msg discord','nº msg slack','media msg discord','media msg slack']
     this.qualA =['data ultima msg discord', 'data ultima msg slack']
 }
 
-function runPrototype() { // executa padrão de criação Protótipo
+var Decorator = function(params,config,getAct){ // DECORATOR no Padrão de Estrutura Decorator
+
+    this.params = params
+    this.ActID = params.ActID
+    this.StdID = params.StdID
+    this.config = config
+    this.discord = config.discord
+    this.slack = config.slack
+    this.getAct = getAct
+    this.IdStdDiscord = getAct.IdStdDiscord
+    this.IdStdSlack = getAct.IdStdSlack
+}
+
+function runPrototype() { // executa Padrão de Criação Protótipo e Padrão de Estrutura Decorator
 
     var params = new receberParams()
     var config = new configActivity()
     var getAct = new getActivity()
     var analiticas = new getAnalyticsStd()
     
-    var proto = new Activity(params.ActID,params.StdID,config.discord,config.slack,getAct.IdStdDiscord,getAct.IdStdSlack,analiticas.quantA[0],analiticas.quantA[1],analiticas.quantA[2],analiticas.quantA[3],analiticas.quantA[4],analiticas.quantA[5],analiticas.qualA[0],analiticas.qualA[1])
-
+    var decorated = new Decorator(params,config,getAct) // Padrão Estrutura - Decorator
+    var proto = new Activity(decorated.ActID,decorated.StdID,decorated.discord,decorated.slack,decorated.IdStdDiscord,decorated.IdStdSlack,analiticas.quantA[0],analiticas.quantA[1],analiticas.quantA[2],analiticas.quantA[3],analiticas.quantA[4],analiticas.quantA[5],analiticas.qualA[0],analiticas.qualA[1]) // Padrão Criação - Prototype
     var prototype = new ActivityPrototype(proto);
     var newActivity = prototype.clone();
 
