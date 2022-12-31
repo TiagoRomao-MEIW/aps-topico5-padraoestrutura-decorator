@@ -136,9 +136,10 @@ function runPrototype() { // executa Padrão de Criação Protótipo e Padrão d
     var analiticas = new getAnalyticsStd()
     
     var decorated = new Decorator(params,config,getAct) // Padrão Estrutura - Decorator
-    var proto = new Activity(decorated.ActID,decorated.StdID,decorated.discord,decorated.slack,decorated.IdStdDiscord,decorated.IdStdSlack,analiticas.quantA[0],analiticas.quantA[1],analiticas.quantA[2],analiticas.quantA[3],analiticas.quantA[4],analiticas.quantA[5],analiticas.qualA[0],analiticas.qualA[1]) // Padrão Criação - Prototype
+
+    var proto = new Activity(decorated.ActID,decorated.StdID,decorated.discord,decorated.slack,decorated.IdStdDiscord,decorated.IdStdSlack,analiticas.quantA[0],analiticas.quantA[1],analiticas.quantA[2],analiticas.quantA[3],analiticas.quantA[4],analiticas.quantA[5],analiticas.qualA[0],analiticas.qualA[1]) 
     var prototype = new ActivityPrototype(proto);
-    var newActivity = prototype.clone();
+    var newActivity = prototype.clone(); // Padrão Criação - Prototype
 
     console.log("Clone do protótipo Activity: ")
     console.log(newActivity)
